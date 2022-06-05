@@ -179,7 +179,7 @@ class Checker(TwoPlayerGame):
         pass
     
     
-    #Angel0 lose function  
+    #Angelo  
     def lose(self):
         """
         black lose if white piece is in black territory
