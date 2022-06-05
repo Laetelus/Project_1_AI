@@ -179,24 +179,20 @@ class Checker(TwoPlayerGame):
         pass
     
     
-    #Angelo 
+    #Angel0 lose function  
     def lose(self):
         """
         black lose if white piece is in black territory
         white lose if black piece is in black territory
         """
-        self.black_lose = True
-        self.white_lose = True
 
-        if self.current_player == 1:    #white
-            for i,j in self.players[0].pos:  
-                if (i,j) in self.players[0].pos:    
-                    self.black_lose = False 
-        else:
-            for i,j in self.players[1].pos:
-                if (i,j) in self.players[1].pos:
-                    self.white_lose = False
-        pass
+        for i,j in self.players[0].pos: # white
+            if (i,j) in black_squares: # white in black territory
+                return True # white lose
+        for i,j in self.players[1].pos: # black
+            if (i,j) in black_squares: # black in black territory
+                return False # black lose
+        return None # draw
 
     def is_over(self):
         """
