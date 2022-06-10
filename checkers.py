@@ -176,7 +176,8 @@ class Checker(TwoPlayerGame):
          [W,0,W,0,W,0,W,0]]
         ------
         """
-        pass
+        
+        
     
     
     #Angelo  
@@ -186,19 +187,19 @@ class Checker(TwoPlayerGame):
         white lose if black piece is in black territory
         """
 
-        for i,j in self.players[0].pos: # white
-            if (i,j) in black_squares: # white in black territory
-                return True # white lose
-        for i,j in self.players[1].pos: # black
-            if (i,j) in black_squares: # black in black territory
-                return False # black lose
-        return None # draw
 
     def is_over(self):
         """
         game is over immediately when one player get one of its piece into opponent's territory.
         """
-        pass
+        for i,j in self.players[0].pos: # white
+            if (i,j) in black_squares: # white in black territory
+                return True # white lose
+        for i,j in self.players[1].pos: # black
+            if (i,j) in black_squares: # black in black territoryS
+                return False # black lose
+        return None # draw
+    
 
     def show(self):
         """
@@ -227,3 +228,6 @@ if __name__ == "__main__":
     game = Checker( [ AI_Player(ai), AI_Player(ai) ] )
     history = game.play()
 # questions:1 ends here
+
+
+
