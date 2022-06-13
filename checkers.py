@@ -27,7 +27,7 @@ class Checker(TwoPlayerGame):
         ]
         self.white_pieces = [
             (6,1), (6,3), (6,5), (6,7),
-            (7,0), (7,2), (7,4), (7,6)
+            (7,0), (7,2), (7,4), (7,6) 
         ]
         for i,j in self.black_pieces:
             self.board[i,j] = "B"
@@ -129,7 +129,6 @@ class Checker(TwoPlayerGame):
                         old_new_piece_pos.append((old_piece_pos,n))
 
         # board position after  move
-
         for i,j in old_new_piece_pos:
             b = board.copy()
             b[i[0], i[1]] = 0
@@ -172,22 +171,35 @@ class Checker(TwoPlayerGame):
          [0,0,0,0,0,0,0,0],
          [0,0,0,0,0,0,0,0],
          [0,0,0,0,0,0,0,0],
-         [0,W,0,W,0,W,0,W],
+         [0,W,0,W,0,W,0,W], 
          [W,0,W,0,W,0,W,0]]
         ------
         """
-        
-        
+        for i,j in self.get_piece_pos_from_table(pos):
+            if(i,j) in self.players[self.current_player-1].pos:
+                self.players[self.current_player-1].pos.append((i,j))
+                self.current_player = (self.current_player % 2) + 1
+                self.board[i,j] = 0
+            else:
+                raise ValueError(f"In make_move(), {(i,j)} is not in {self.players[self.current_player-1].pos}")
+            
+
     
-    
-    #Angelo  
+    #Angelo's code
     def lose(self):
         """
         black lose if white piece is in black territory
         white lose if black piece is in black territory
         """
+        if self.white_piece in self.black_territory:
+            return self.possible_moves_on_black_turn() #may have to change this to determine if white or black lose
+        else:
+            return False
+        
+        
+            
 
-
+    #Someone else's function may review to change
     def is_over(self):
         """
         game is over immediately when one player get one of its piece into opponent's territory.
