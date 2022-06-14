@@ -175,14 +175,14 @@ class Checker(TwoPlayerGame):
          [W,0,W,0,W,0,W,0]]
         ------
         """
-        for i,j in self.get_piece_pos_from_table(pos):
-            if(i,j) in self.players[self.current_player-1].pos:
-                self.players[self.current_player-1].pos.append((i,j))
-                self.current_player = (self.current_player % 2) + 1
-                self.board[i,j] = 0
-            else:
-                raise ValueError(f"In make_move(), {(i,j)} is not in {self.players[self.current_player-1].pos}")
-            
+        # for i,j in self.get_piece_pos_from_table(pos):
+        #     if(i,j) in self.players[self.current_player-1].pos:
+        #         self.players[self.current_player-1].pos.append((i,j))
+        #         self.current_player = (self.current_player % 2) + 1
+        #         self.board[i,j] = 0
+        #     else:
+        #         raise ValueError(f"In make_move(), {(i,j)} is not in {self.players[self.current_player-1].pos}")
+        self.board[int(pos)-1]  = self.current_player
 
     
     #Angelo's code
@@ -191,10 +191,13 @@ class Checker(TwoPlayerGame):
         black lose if white piece is in black territory
         white lose if black piece is in black territory
         """
-        if self.white_piece in self.black_territory:
-            return self.possible_moves_on_black_turn() #may have to change this to determine if white or black lose
-        else:
-            return False
+        
+        return self.black_pieces if self.white_pieces in self.black_territory else self.white_pieces
+    
+        # if self.white_piece in self.black_territory:
+        #     return True #may have to change this to determine if white or black lose
+        # else:
+        #     return False
         
         
             
@@ -204,13 +207,18 @@ class Checker(TwoPlayerGame):
         """
         game is over immediately when one player get one of its piece into opponent's territory.
         """
-        for i,j in self.players[0].pos: # white
-            if (i,j) in black_squares: # white in black territory
-                return True # white lose
-        for i,j in self.players[1].pos: # black
-            if (i,j) in black_squares: # black in black territoryS
-                return False # black lose
-        return None # draw
+        for i in self.white_territory:
+            if i in self.white_pieces:
+                return True
+            else:
+                return False
+        # for i,j in self.players[0].pos: # white
+        #     if (i,j) in black_squares: # white in black territory
+        #         return True # white lose
+        # for i,j in self.players[1].pos: # black
+        #     if (i,j) in black_squares: # black in black territoryS
+        #         return False # black lose
+        # return None # draw
     
 
     def show(self):
@@ -221,19 +229,20 @@ class Checker(TwoPlayerGame):
         # board position before move
         board = self.blank_board.copy()
         print(f"player 1 positions = {self.players[0].pos}")
-        print(f"player 2 positions = {self.players[1].pos}")
+        print(f"player 2 positions = {self.players[1].pos}")    
         for (p,l) in zip(self.players, ["W", "B"]):
             for x,y in p.pos:
                 board[x,y] = l
         print('\n')
         print(board)
 
+    #scoring function completed 
     def scoring(self):
        """
        win = 0
        lose = -100
        """
-       pass
+       return -100 if self.lose() else 0; #make sure lose function works properly for scoring to work
 
 if __name__ == "__main__":
     ai = Negamax(1) # The AI will think 13 moves in advance
