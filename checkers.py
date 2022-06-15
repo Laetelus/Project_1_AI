@@ -171,25 +171,25 @@ class Checker(TwoPlayerGame):
         pos = position of all pieces on the (8 x 8) boards. type numpy array.
         ------
         """  
-        if self.current_player  == 1:
-            self.players[self.current_player - 1].pos = self.get_piece_pos_from_table(pos) 
-        elif self.current_player  == 2:
-            self.players[self.current_player - 1].pos = self.get_piece_pos_from_table(pos)   
+        if self.current_player  == 1:   # white
+            self.players[self.current_player - 1].pos = self.get_piece_pos_from_table(pos) # assign white position to first player
+        elif self.current_player  == 2:     # black
+            self.players[self.current_player - 1].pos = self.get_piece_pos_from_table(pos) # assign black position to second player
 
-    
-    #Angelo's code
+
     def lose(self):
         """
         black lose if white piece is in black territory
         white lose if black piece is in black territory
         """
         if self.current_player == 1:    
-            for i,j in self.white_territory:    # white lose if white piece is in black territory
-                if self.board[i,j] == "B":            
+            for i,j in self.white_territory:    # iterate through white territory
+                if self.board[i,j] == "B":      # if there is a black piece in black territory    
                     return True 
+                
         elif self.current_player == 2:
-            for i,j in self.black_territory:    
-                if self.board[i,j] == "W":
+            for i,j in self.black_territory:    # iterate through black territory
+                if self.board[i,j] == "W":      # if there is a white piece in black territory
                     return True
         else:
             return False
